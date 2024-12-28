@@ -1,0 +1,169 @@
+definitions:
+  input.CreateUserIn:
+    properties:
+      last_name:
+        type: string
+      name:
+        type: string
+    required:
+      - last_name
+      - name
+    type: object
+  input.UpdateUserIn:
+    properties:
+      last_name:
+        type: string
+      name:
+        type: string
+    required:
+      - last_name
+      - name
+    type: object
+  output.CreateUserOut:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+    type: object
+  output.DeleteUserOut:
+    properties:
+      success:
+        type: boolean
+    type: object
+  output.GetUserOut:
+    properties:
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+    type: object
+  output.GetUsersOut:
+    properties:
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+    type: object
+  output.UpdateUserOut:
+    properties:
+      id:
+        type: integer
+      last_name:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/users:
+    get:
+      description: Get a list of all users
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: "#/definitions/output.GetUsersOut"
+            type: array
+      summary: Get all users
+      tags:
+        - Usuarios
+    post:
+      consumes:
+        - application/json
+      description: Create a user with data of request
+      parameters:
+        - description: Datos del usuario a crear
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/input.CreateUserIn"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: "#/definitions/output.CreateUserOut"
+      summary: Create a user
+      tags:
+        - Usuarios
+  /api/users/{id}:
+    delete:
+      description: Delete a user by ID
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/output.DeleteUserOut"
+      summary: Delete a user
+      tags:
+        - Usuarios
+    get:
+      description: Get details of a single user by ID
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/output.GetUserOut"
+      summary: Get a single user
+      tags:
+        - Usuarios
+    put:
+      consumes:
+        - application/json
+      description: Update an existing user with new data
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: New user data
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/input.UpdateUserIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/output.UpdateUserOut"
+      summary: Update a user
+      tags:
+        - Usuarios
+swagger: "2.0"
